@@ -13,12 +13,17 @@ class UnityBridge private constructor(private val activity: Activity) {
         }
     }
 
-    fun shareText(text: String) {
-        whatsappShare.shareText(text)
+    fun shareText(text: String): Boolean {
+        return whatsappShare.shareText(text)
     }
 
-    fun shareImage(uri: String, text: String) {
-        val imageUri = Uri.parse(uri)
-        whatsappShare.shareImage(imageUri, text)
+    fun shareImage(uri: String, text: String): Boolean {
+        return try {
+            val imageUri = Uri.parse(uri)
+            whatsappShare.shareImage(imageUri, text)
+        } catch (e: Exception) {
+            e.printStackTrace()
+            false
+        }
     }
 }
